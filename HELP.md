@@ -5,10 +5,10 @@
 ## Extra Information
 
 * Ensure no password it set.
-* Extron telnet connection has a timeout default 5mins
+* Extron telnet connection has a timeout default 5 mins.
 
 ## Supported commands
 
-* **Input to Output** Route 
+* **Switch input** Switch input on the switcher. You can select 1-8 instead of 1-4, this to support the IN1608 also.
 
-> This module is using Extron SIS commands which is standard for most Extron hardware and could be used as a starting point for other hardware.
+> This module is using Extron SIS commands

@@ -1,10 +1,10 @@
 {
 	"name": "extron-in1604",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"api_version": "1.0.0",
 	"keywords": [
 		"Protocol",
-		"Matrix"
+		"Switcher"
 		],
 	"manufacturer": "Extron",
 	"product": "IN1604",
