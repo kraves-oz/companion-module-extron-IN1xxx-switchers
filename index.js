@@ -36,12 +36,12 @@ instance.prototype.incomingData = function(data) {
 	}
 
 	if (self.login === false && data.match("Password:")) {
-		self.status(self.STATUS_WARNING,'Logging in');
-		self.socket.write(""+ "\n");
+		self.log('error', "expected no password");
+		self.status(self.STATUS_ERROR, 'expected no password');
 	}
 
 	// Match first letter of expected response from unit.
-	else if (self.login === false && data.match(/IN16/)) {
+	else if (self.login === false && data.match(/Vid/)) {
 		self.login = true;
 		self.status(self.STATUS_OK);
 		debug("logged in");
@@ -54,7 +54,7 @@ instance.prototype.incomingData = function(data) {
 	function heartbeat() {
 		self.login = false;
 		self.status(self.STATUS_WARNING,'Checking Connection');
-		self.socket.write("!"+ "\n"); // should respond with Switcher view current input
+		self.socket.write("I"+ "\n"); // should reply with Scaler setup, eg: "Vid3 Aud3 Typ6 Std0 Blk0 Hrtxxx.x Vrtxxx.x"
 		debug("Checking Connection");
 	}
 
