@@ -46,10 +46,6 @@ instance.prototype.incomingData = function(data) {
 		self.status(self.STATUS_OK);
 		debug("logged in");
 	}
-	else if (self.login === false && data.match('login incorrect')) {
-		self.log('error', "incorrect username/password (expected no password)");
-		self.status(self.STATUS_ERROR, 'Incorrect user/pass');
-	}
 	// Heatbeat to keep connection alive
 	function heartbeat() {
 		self.login = false;
@@ -79,7 +75,6 @@ instance.prototype.init = function() {
 
 instance.prototype.init_tcp = function() {
 	var self = this;
-	var receivebuffer = '';
 
 	if (self.socket !== undefined) {
 		self.socket.destroy();
@@ -99,16 +94,11 @@ instance.prototype.init_tcp = function() {
 		self.socket.on('error', function (err) {
 			debug("Network error", err);
 			self.log('error',"Network error: " + err.message);
+			self.login = false;
 		});
 
 		self.socket.on('connect', function () {
 			debug("Connected");
-			self.login = false;
-		});
-
-		self.socket.on('error', function (err) {
-			debug("Network error", err);
-			self.log('error',"Network error: " + err.message);
 			self.login = false;
 		});
 
@@ -121,12 +111,12 @@ instance.prototype.init_tcp = function() {
 		self.socket.on("iac", function(type, info) {
 			// tell remote we WONT do anything we're asked to DO
 			if (type == 'DO') {
-				socket.write(new Buffer([ 255, 252, info ]));
+				self.socket.write(new Buffer([ 255, 252, info ]));
 			}
 
 			// tell the remote DONT do whatever they WILL offer
 			if (type == 'WILL') {
-				socket.write(new Buffer([ 255, 254, info ]));
+				self.socket.write(new Buffer([ 255, 254, info ]));
 			}
 		});
 	}
