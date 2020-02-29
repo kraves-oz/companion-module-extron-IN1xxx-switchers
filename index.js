@@ -30,12 +30,12 @@ instance.prototype.incomingData = function(data) {
 
 	// Match part of the copyright response from unit when a connection is made.
 	// Send Info request which should reply with Matrix setup, eg: "V8X4 A8X4"
-	if (self.login === false && data.match("Extron Electronics")) {
+	if (self.login === false && data.match(/Extron Electronics/)) {
 		self.status(self.STATUS_WARNING,'Logging in');
-		self.socket.write("I"+ "\n");
+		self.socket.write("I\n");
 	}
 
-	if (self.login === false && data.match("Password:")) {
+	if (self.login === false && data.match(/Password:/)) {
 		self.log('error', "expected no password");
 		self.status(self.STATUS_ERROR, 'expected no password');
 	}
@@ -50,7 +50,7 @@ instance.prototype.incomingData = function(data) {
 	function heartbeat() {
 		self.login = false;
 		self.status(self.STATUS_WARNING,'Checking Connection');
-		self.socket.write("I"+ "\n"); // should reply with Scaler setup, eg: "Vid3 Aud3 Typ6 Std0 Blk0 Hrtxxx.x Vrtxxx.x"
+		self.socket.write("I\n"); // should reply with Scaler setup, eg: "Vid3 Aud3 Typ6 Std0 Blk0 Hrtxxx.x Vrtxxx.x"
 		debug("Checking Connection");
 	}
 
