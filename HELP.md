@@ -1,4 +1,4 @@
-# Module for Extron IN1604
+# Module for Extron IN1604 / IN1608 / IN1808
 
 > this module connects via a telnet connection.
 
@@ -10,5 +10,6 @@
 ## Supported commands
 
 * **Switch input** Switch input on the switcher. You can select 1-8 instead of 1-4, this to support the IN1608 also.
+* **Switch Logo** Select and switch to logo on the switcher. You can select from up to 20 preloaded logos
 
 > This module is using Extron SIS commands

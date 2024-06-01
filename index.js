@@ -40,8 +40,8 @@ instance.prototype.incomingData = function(data) {
 		self.status(self.STATUS_ERROR, 'expected no password');
 	}
 
-	// Match first letter of expected response from unit.
-	else if (self.login === false && data.match(/Vid/)) {
+	// Match first letter of expected response from unit. IN1604/8 or IN1808
+	else if (self.login === false && ((data.match(/Vid/))||(data.match(/IN18/)))) {
 		self.login = true;
 		self.status(self.STATUS_OK);
 		debug("logged in");
@@ -51,6 +51,7 @@ instance.prototype.incomingData = function(data) {
 		self.login = false;
 		self.status(self.STATUS_WARNING,'Checking Connection');
 		self.socket.write("I\n"); // should reply with Scaler setup, eg: "Vid3 Aud3 Typ6 Std0 Blk0 Hrtxxx.x Vrtxxx.x"
+								  // For IN1808 newer FW, reply is model name IN1808
 		debug("Checking Connection");
 	}
 
@@ -133,6 +134,25 @@ instance.prototype.CHOICES_INPUT = [
 	{ label: 'Input 8', id: '8' }
 ]
 
+instance.prototype.CHOICES_LOGO = [
+	{ label: 'Logo 1', id: '1' },
+	{ label: 'Logo 2', id: '2' },
+	{ label: 'Logo 3', id: '3' },
+	{ label: 'Logo 4', id: '4' },
+	{ label: 'Logo 5', id: '5' },
+	{ label: 'Logo 6', id: '6' },
+	{ label: 'Logo 7', id: '7' },
+	{ label: 'Logo 8', id: '8' },
+	{ label: 'Logo 9', id: '9' },
+	{ label: 'Logo 10', id: '10' },
+	{ label: 'Logo 11', id: '11' },
+	{ label: 'Logo 12', id: '12' },
+	{ label: 'Logo 13', id: '13' },
+	{ label: 'Logo 14', id: '14' },
+	{ label: 'Logo 15', id: '15' },
+	{ label: 'Logo 16', id: '16' }
+]
+
 // Return config fields for web config
 instance.prototype.config_fields = function () {
 	var self = this;
@@ -181,6 +201,38 @@ instance.prototype.actions = function(system) {
 				default: '1'
 			}]
 		}
+
+		'logo': {
+			label: 'Enable logo number',
+			options: [{
+				type: 'dropdown',
+				label: 'Show logo',
+				id: 'logo',
+				choices: self.CHOICES_LOGO,
+				default: '1'
+			}]
+		}
+
+		'logo off': {
+			label: 'Turn off current logo',  //potentially \eE 1LOGO returns current logo
+			options: [{
+				type: 'static-text',
+				label: 'Set current logo off',
+				id: 'logodisable'
+			}]
+		}
+
+		'loopoutput': {
+			label: 'Switch HDMI loop output',
+			options: [{
+				type: 'dropdown',
+				label: 'Select input to loop',
+				id: 'loopout',
+				choices: self.CHOICES_INPUT,
+				default: '1'
+			}]
+		}
+
 	};
 
 	self.setActions(actions);
@@ -197,7 +249,19 @@ instance.prototype.action = function(action) {
 		case 'input':
 			cmd = opt.input +'!';
 			break;
-
+		
+		case 'logo':
+			cmd = '\eE1*' + opt.logo +'#LOGO';  //Esc \eE1*X4#LOGO 
+			break;
+		
+		case 'logodisable':
+			cmd = '\eE1*0LOGO'; 	//disable the current logo
+			break;
+	
+		case 'loopoutput':
+			cmd = '\e' + opt.loopout + 'LOUT';		// Change HDMI loop output
+			break;
+		
 	}
 
 	if (cmd !== undefined) {

@@ -9,7 +9,7 @@
 	"manufacturer": "Extron",
 	"product": "IN1604",
 	"shortname": "IN1604",
-	"description": "IN1604 Switcher plugin for Companion",
+	"description": "IN1604/IN1608/IN1808 Switcher plugin for Companion",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
