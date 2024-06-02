@@ -1,0 +1,37 @@
+{
+	"id": "extron-in1604-IN1808",
+	"name": "extron-in1604-IN1808",
+	"shortname": "IN1604",
+	"description": "IN1604 / IN1608 / IN1808 Switcher plugin for Companion",
+	"version": "0.0.0",
+	"license": "MIT",
+	"repository": "git+https://github.com/bitfocus/companion-module-extron-in1604.git",
+	"bugs": "https://github.com/bitfocus/companion-module-extron-in1604/issues",
+	"maintainers": [
+		{
+			"name": "Jeffrey Davidsz",
+			"email": "jeffrey.davidsz@vicreo.eu"
+		}
+	],
+	"contributors": [
+		{
+			"name": "Kyle Remphrey",
+			"email": "remphrey@gmail.com"
+		}
+	],
+	"legacyIds": [],
+	"runtime": {
+		"type": "node18",
+		"api": "nodejs-ipc",
+		"apiVersion": "0.0.0",
+		"entrypoint": "../index.js"
+	},
+	"manufacturer": "Extron",
+	"products": [
+		"IN1604, IN1604, IN1808"
+	],
+	"keywords": [
+		"Protocol",
+		"Switcher"
+	]
+}
