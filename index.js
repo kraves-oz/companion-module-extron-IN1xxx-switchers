@@ -200,7 +200,7 @@ instance.prototype.actions = function(system) {
 				choices: self.CHOICES_INPUT,
 				default: '1'
 			}]
-		}
+		},
 
 		'logo': {
 			label: 'Enable logo number',
@@ -211,7 +211,7 @@ instance.prototype.actions = function(system) {
 				choices: self.CHOICES_LOGO,
 				default: '1'
 			}]
-		}
+		},
 
 		'logo off': {
 			label: 'Turn off current logo',  //potentially \eE 1LOGO returns current logo
@@ -220,7 +220,7 @@ instance.prototype.actions = function(system) {
 				label: 'Set current logo off',
 				id: 'logodisable'
 			}]
-		}
+		},
 
 		'loopoutput': {
 			label: 'Switch HDMI loop output',
